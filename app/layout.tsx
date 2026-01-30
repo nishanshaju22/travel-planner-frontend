@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Travel Buddy - AI-Powered Collaborative Trip Planning',
+  title: 'Wanderplan - AI-Powered Collaborative Trip Planning',
   description: 'Plan your perfect trip with AI assistance. Collaborate with friends, discover destinations, and create unforgettable memories.',
 }
 
