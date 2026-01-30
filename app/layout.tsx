@@ -1,19 +1,18 @@
-import type { Metadata } from 'next'
-import './globals.css'
-
-export const metadata: Metadata = {
-  title: 'Travel Buddy - AI-Powered Collaborative Trip Planning',
-  description: 'Plan your perfect trip with AI assistance. Collaborate with friends, discover destinations, and create unforgettable memories.',
-}
+import './globals.css';
+import { AuthProvider } from '../src/context/AuthContext';
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
-  )
+  );
 }
