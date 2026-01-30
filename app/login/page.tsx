@@ -1,8 +1,19 @@
-'use client';
+"use client";
 
 import Link from 'next/link';
+import { useState } from 'react';
+import { useAuth } from '@/lib/AuthContext';
 
 export default function LoginPage() {
+  const { login, loading, error } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login(email, password);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="max-w-md w-full bg-white p-8 rounded-3xl shadow-lg border border-sand-200">
@@ -18,43 +29,50 @@ export default function LoginPage() {
           <h1 className="font-display text-3xl font-bold mb-2">Welcome back</h1>
           <p className="text-earth-600">Log in to continue planning your adventures</p>
         </div>
-        
-        <div className="space-y-4">
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-earth-700 mb-2">Email</label>
-            <input 
-              type="email" 
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
               className="w-full px-4 py-3 border border-sand-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="you@example.com"
+              required
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-earth-700 mb-2">Password</label>
-            <input 
-              type="password" 
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
               className="w-full px-4 py-3 border border-sand-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="••••••••"
+              required
             />
           </div>
-          
-          <button className="w-full py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-xl transition-colors">
-            Log in
+
+          <button
+            disabled={loading}
+            type="submit"
+            className="w-full py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-xl transition-colors disabled:opacity-60"
+          >
+            {loading ? 'Logging in…' : 'Log in'}
           </button>
-          
+
+          {error && <p className="text-sm text-red-600 text-center">{error}</p>}
+
           <p className="text-center text-sm text-earth-600">
             Don't have an account?{' '}
             <Link href="/signup" className="text-primary font-medium hover:underline">
               Sign up
             </Link>
           </p>
-        </div>
-        
-        <div className="mt-8 p-4 bg-primary/5 rounded-xl border border-primary/20">
-          <p className="text-sm text-earth-700">
-            <strong>Note:</strong> This is a stub page. Authentication is not yet implemented.
-          </p>
-        </div>
+        </form>
+
       </div>
     </div>
   );
