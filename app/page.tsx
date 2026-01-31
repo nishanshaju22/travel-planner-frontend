@@ -1,21 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { isAuthenticated } from '@/lib/auth';
 import Link from 'next/link';
 
 export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    console.log(isAuthenticated())
-    if (isAuthenticated()) {
-      router.push('/dashboard');
-      console.log('User is authenticated - would redirect to /dashboard');
-    }
-  }, []);
-
   return (
     <main className="min-h-screen overflow-hidden">
       {/* Animated Background Shapes */}
