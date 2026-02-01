@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import {
   Home,
   Bell,
@@ -18,11 +19,11 @@ export default function Sidebar({ initialCollapsed = true }) {
   const [collapsed, setCollapsed] = useState(initialCollapsed);
 
   const items = [
-    { label: "Dashboard", icon: Home },
-    { label: "Notifications", icon: Bell, badge: 4 },
-    { label: "Trips", icon: Folder },
-    { label: "Tasks", icon: CheckSquare },
-    { label: "Analytics", icon: BarChart2 },
+    { label: "Dashboard", icon: Home, href: "/dashboard" },
+    { label: "Notifications", icon: Bell, href: "/notifications" },
+    { label: "My Trips", icon: Folder, href: "/trips" },
+    { label: "Tasks", icon: CheckSquare, href: "/tasks" },
+    { label: "Analytics", icon: BarChart2, href: "/analytics" },
   ];
 
   return (
@@ -40,7 +41,7 @@ export default function Sidebar({ initialCollapsed = true }) {
             collapsed ? "justify-center" : "justify-start"
           }`}
         >
-          <div className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2">
             <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center text-white font-bold">
               TB
             </div>
@@ -49,27 +50,30 @@ export default function Sidebar({ initialCollapsed = true }) {
                 Travel Buddy
               </span>
             )}
-          </div>
+          </Link>
         </div>
 
         <nav className="space-y-1">
-          {items.map(({ label, icon: Icon, badge }) => (
-            <div
+          {items.map(({ label, icon: Icon, href, badge }) => (
+            <Link
               key={label}
-              className={`flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer hover:bg-gray-100 ${
+              href={href}
+              className={`flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-gray-100 transition-colors ${
                 collapsed ? "justify-center px-0" : ""
               }`}
             >
               <Icon size={20} />
               {!collapsed && (
-                <span className="flex-1 text-sm font-medium">{label}</span>
+                <>
+                  <span className="flex-1 text-sm font-medium">{label}</span>
+                  {badge && (
+                    <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+                      {badge}
+                    </span>
+                  )}
+                </>
               )}
-              {!collapsed && badge && (
-                <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
-                  {badge}
-                </span>
-              )}
-            </div>
+            </Link>
           ))}
         </nav>
       </div>

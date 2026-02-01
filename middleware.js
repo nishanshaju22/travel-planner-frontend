@@ -1,29 +1,46 @@
 import { NextResponse } from 'next/server'
 
 export function middleware(request) {
-  const token = request.cookies.get('jwt')?.value
   const { pathname } = request.nextUrl
 
-  // add new routes here
-  const protectedRoutes = ['/dashboard']
+  // Get token from cookie
+  const token = request.cookies.get('jwt')?.value
 
-  const publicRoutes = ['/', '/login', '/signup']
+  // Define routes
+  const protectedRoutes = ['/dashboard', '/trips']
+  const publicRoutes = ['/login', '/signup']
 
+  // Check if current path is protected
   const isProtectedRoute = protectedRoutes.some(route =>
-    pathname.startsWith(route),
+    pathname === route || pathname.startsWith(route + '/'),
   )
 
-  const isPublicRoute = publicRoutes.includes(pathname)
+  // Check if current path is public
+  const isPublicRoute = publicRoutes.some(route =>
+    pathname === route || pathname.startsWith(route + '/'),
+  )
 
-  // Not logged in → block protected routes
+  // 1️⃣ Not logged in → block protected routes
   if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  // Logged in → block auth pages
+  // 2️⃣ Logged in → block public routes
   if (token && isPublicRoute) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
+  // 3️⃣ Everything else → allow
   return NextResponse.next()
+}
+
+// Optional: limit middleware to only the relevant routes for performance
+export const config = {
+  matcher: [
+    '/',
+    '/login',
+    '/signup',
+    '/dashboard/:path*',
+    '/trips/:path*',
+  ],
 }
