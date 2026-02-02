@@ -14,7 +14,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -32,8 +32,15 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "app/login/page.jsx", "app/signup/page.jsx", "lib/auth.js", "app/layout.jsx", "app/page.jsx", "app/dashboard/layout.jsx"  ],
+    ".next/types/**/*.ts",
+    "app/login/page.jsx",
+    "app/signup/page.jsx",
+    "lib/auth.js",
+    "app/layout.jsx",
+    "app/page.jsx",
+    "app/dashboard/layout.jsx",
+    ".next/dev/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
