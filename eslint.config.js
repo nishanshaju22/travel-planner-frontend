@@ -2,7 +2,7 @@
 export default [
 	// Ignore these folders
 	{
-		ignores: ['node_modules/**', 'dist/**'],
+		ignores: ['node_modules/**', 'dist/**', '.next/**'],
 	},
 
 	// Apply rules to all JS files
