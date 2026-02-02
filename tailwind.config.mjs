@@ -8,11 +8,11 @@ const config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#E85D04',
-          dark: '#DC2F02',
-          light: '#F48C06',
-        },
+          primary: {
+      DEFAULT: '#14b8a6', // Teal
+      dark: '#0d9488',
+      light: '#2dd4bf',
+    },
         sand: {
           50: '#FDFCF8',
           100: '#FAF7F0',
@@ -24,6 +24,7 @@ const config = {
           800: '#2D2D2D',
           700: '#4A4A4A',
           600: '#6B6B6B',
+          400: '#9B9B9B',
         },
       },
       fontFamily: {
