@@ -2,6 +2,9 @@
 import { useAuth } from '../../src/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { userApi } from '../../src/api/userApi';
+import { useEffect } from 'react';
+import BucketListPopup from '../../src/components/BucketListPopup';
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();
@@ -9,6 +12,25 @@ export default function DashboardPage() {
   const [destination, setDestination] = useState('');
   const [notifications] = useState(3);
   const [messages] = useState(5);
+  const [bucketOpen, setBucketOpen] = useState(false);
+  const [bucketItem, setBucketItem] = useState('');
+  const [bucketItems, setBucketItems] = useState([]);
+  
+  useEffect(() => {
+    if (!bucketOpen || !user?.id) return;
+
+    const fetchBucketList = async () => {
+      try {
+        const data = await userApi.showBucketList(user.id);
+        setBucketItems(data);
+      } catch (err) {
+        console.error('Failed to load bucket list', err);
+      }
+    };
+
+    fetchBucketList();
+  }, [bucketOpen, user?.id]);
+
 
   const handleLogout = async () => {
     await logout();
@@ -158,8 +180,19 @@ export default function DashboardPage() {
             <span className="text-white font-bold text-xl">TravelCo</span>
           </div>
 
+
           {/* Right Actions */}
           <div className="flex items-center gap-3">
+            {/* Bucket List Plus Button */}
+            <button
+              onClick={() => setBucketOpen(!bucketOpen)}
+              className={`relative w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 ${bucketOpen ? 'rotate-45' : 'rotate-0'}`}
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
+
             {/* Notifications */}
             <button className="relative w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,6 +261,16 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+      
+      <BucketListPopup
+        isOpen={bucketOpen}
+        userId={user?.id}
+        bucketItem={bucketItem}
+        setBucketItem={setBucketItem}
+        bucketItems={bucketItems}
+        setBucketItems={setBucketItems}
+        userApi={userApi}
+      />
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-16">
