@@ -80,36 +80,6 @@ export default function Sidebar({ initialCollapsed = true }) {
 
       {/* Bottom */}
       <div className="border-t mx-4 px-4 pt-6 pb-2 mb-6">
-        <div
-          className={`flex items-center ${
-            collapsed ? "justify-center" : "gap-4"
-          }`}
-        >
-          <div className="p-0.5 rounded-full border border-gray-200">
-            {mockUser.avatarUrl ? (
-              <img
-                src={mockUser.avatarUrl}
-                className="w-10 h-10 rounded-full object-cover"
-                alt="User avatar"
-              />
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-600">
-                {mockUser.name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </div>
-            )}
-          </div>
-          {!collapsed && (
-            <div className="text-sm">
-              <div className="font-medium">{mockUser.name}</div>
-              <div className="text-gray-500 text-xs">
-                {mockUser.email}
-              </div>
-            </div>
-          )}
-        </div>
       </div>
     </aside>
   );

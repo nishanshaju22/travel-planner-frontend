@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { LogOut, Settings, User } from 'lucide-react';
+import { LogOut, User } from 'lucide-react';
 
 export default function UserMenu() {
   const { user, logout } = useAuth();
@@ -40,7 +40,7 @@ export default function UserMenu() {
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-colors font-semibold cursor-pointer"
+        className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-colors font-semibold cursor-pointer shadow-lg"
       >
         {user.avatar ? (
           <img
@@ -70,17 +70,6 @@ export default function UserMenu() {
             >
               <User size={16} />
               Update Details
-            </button>
-
-            <button
-              onClick={() => {
-                router.push('/dashboard/settings');
-                setIsOpen(false);
-              }}
-              className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-3"
-            >
-              <Settings size={16} />
-              Settings
             </button>
 
             <div className="border-t border-gray-200 my-2"></div>
