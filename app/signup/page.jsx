@@ -34,7 +34,7 @@ export default function SignupPage() {
     setLoading(true);
     try {
       await register(formData.name, formData.email, formData.password);
-      router.push('/dashboard');
+      router.push('/preferences/budget');
     } catch (err) {
       setError(err?.response?.data?.error || 'Registration failed.');
     } finally {
